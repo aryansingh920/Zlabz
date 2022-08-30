@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>ACME</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta name="xm-bind-id-client_id" content="qL4IJvJ1kHwunrLNOGhAAVCMD39EDPWF">
+    <meta name="xm-bind-id-api_compat" content="latest">
+    <meta name="xm-bind-id-disable_state_validation" content="false">
+
+    <meta name="xm-bind-id-redirect_uri" content="https://acme-project-60103.web.app/">
+    <meta name="xm-bind-id-nonce" content="12345">
+    <meta name="xm-bind-id-state" content="demo_state">
+    <meta name="xm-bind-id-scope" content="bindid_network_info">
+    <meta name="xm-bind-id-verifications" content="phone email">
+    <meta name="xm-bind-id-custom_message" content="Login using Your RP">
+    <meta name="xm-bind-id-aux_link" content="https://your-rp.example.com/more">
+    <meta name="xm-bind-id-aux_link_title" content="More ways to verify">
+    <meta name="xm-bind-id-login_hint" content="email:user@email.com">
+
+    <link rel="stylesheet" href="">
+
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <!-- <h1>Hi</h1> -->
+
+    <button class='xm-bind-id-button' data-xm-bind-id-on-success="onSuccess" data-xm-bind-id-on-failure="onFailure">
+        Biometric Login</button>
+
+
+    <!-- <button onclick="invokeBindId()">Login</button> -->
+
+
+    <script
+        src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CPromise.prototype.finally%2CTextDecoder%2CTextEncoder%2CObject.entries">
+    </script>
+    <script src="https://signin.bindid-sandbox.io/bindid-sdk/transmit-bind-id-sdk.js"></script>
+    <script>
+        // console.log("hi")
+
+
+
+        function initializeSDK() {
+            window.XmBindId.initialize({
+                clientId: 'qL4IJvJ1kHwunrLNOGhAAVCMD39EDPWF',
+                apiCompat: window.XmBindId.XmBindIdApiCompatibilityLevel.UseLatest
+            }).then(res => {
+                alert('SDK Initialized');
+            });
+        }
+
+
+
+
+        // function invokeBindId() {
+        //     initializeSDK()
+
+        //     window.XmBindId.authenticate({
+        //         redirectUri: 'https://your-rp.example.com',
+        //         scope: [window.XmBindId.XmBindIdScopeType.Phone, window.XmBindId.XmBindIdScopeType.Email],
+        //         verifications: [window.XmBindId.XmRequiredVerifications.Phone, window.XmBindId
+        //             .XmRequiredVerifications.Email
+        //         ],
+        //         otherLoginOptions: {
+        //             title: 'More ways to verify',
+        //             url: 'https://your-rp.example.com/more'
+        //         },
+        //         customMessage: 'Login using Your RP',
+        //         loginHint: {
+        //             type: window.XmBindId.XmBindIdLoginHintType.Email,
+        //             value: 'user@email.com'
+        //         }
+        //     })
+        // }
+    </script>
+</body>
+
+</html>

@@ -1,149 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState,useEffect } from "react";
 import "./Login.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
-// import _ from "lodash"
+import _ from "lodash"
 import * as EmailValidator from "email-validator";
-import CircularProgress from "@mui/material/CircularProgress";
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
 
 
 
-const Login = () => {
-  const navigate = useNavigate();
-
+const Login1 = () => {
   const [email, setEmail] = useState("");
-
-  const [msg, setMsg] = useState("");
-
-  const [otpMsg, setOtpMsg] = useState("");
-
-  const [loader, setLoader] = useState(false);
-
-  const [otpViewer, setOtpViewer] = useState(false);
-
-  const [mailotp, setMailotp] = useState("");
-
-  const [otpInput, setOtpInput] = useState("");
-
-  const [otpInputMsg, setOtpInputMsg] = useState("");
-
-
+  // console.log(email);
+  const [err,setErr] = useState("");
 
   useEffect(() => {
-    setMsg("");
-    setOtpMsg("");
+    setErr("");
   }, [email]);
 
-
-
-  // useEffect(() =>{
-  //   setOtpInputMsg("")
-  // },[mailotp])
-
   const functionCall = async () => {
-    if (EmailValidator.validate(email)) {
-      setLoader(true);
-      const url = `sendotp?email=${email}`;
-      const result = await axios
-        .get(url)
-        .then((res) => {
-          setOtpMsg("OTP sent to Mail");
-          setLoader(false);
-          setOtpViewer(true);
-          return res;
-        })
-        .catch((err) => {
-          setOtpMsg("Server Error , Please try again");
-          setLoader(false);
-          return err;
-        });
-      // console.log(result);
-      setMailotp(result.data[0]);
-    } else {
-      setLoader(false);
-      setMsg("Invalid Email");
+    if(EmailValidator.validate(email)){
+        const url = `https://signin.bindid-sandbox.io/authorize?client_id=bid_demo_acme&redirect_uri=https%3A%2F%2Fdemo.bindid-sandbox.io%2F_complete%2Facme&state=798105869&bindid_aux_link_title=More%20ways%20to%20verify&bindid_aux_link=https%3A%2F%2Fdemo.bindid-sandbox.io%2Fother_login&bindid_custom_message=Login%20to%20Acme&scope=openid%20bindid_network_info&display=page&prompt=login&response_type=code&login_hint=email%3A${(email)}`;
+        console.log(url)
+        const result = await axios
+          .get(url,{headers: { 'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*",
+          
+        }})
+          .then((res) => {
+            console.log(res);
+            return res;
+          })
+          .catch((err) => {
+            console.log(err);
+            return err;
+          });
+    
+          console.log("Result",result)
+    }else{
+        setErr("Invalid Email")
     }
+
   };
-
-  const otpViewerComponent = (
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Enter The OTP"
-        onChange={(e) => {
-          setOtpInput(e.target.value);
-        }}
-      />
-      <button
-        class="btn btn-outline-primary"
-        type="button"
-        id="button-addon2"
-        onClick={() => {
-          if (mailotp === otpInput) {
-            setOtpInputMsg("OTP is verified");
-            // console.log(true)
-          } else {
-            setOtpInputMsg("Invalid OTP");
-            // console.log(false)
-          }
-        }}
-      >
-        Verify OTP
-      </button>
-    </div>
-  );
-
-
-
-  const buttonComponent = (
-    <div>
-      {otpInputMsg === "OTP is verified" ? (
-        <Button
-          endIcon={<ArrowRightIcon style={{color:"white"}}/>}
-          onClick={() => {
-            const query = new URLSearchParams(window.location.search);
-            const redirect = query.get('redirect')
-            // console.log(redirect)//123
-            // window.location.href = "https://acme-project-60103.web.app/"
-            window.open(redirect, '_blank');
-          }}
-          style={{ width: "90%" }}
-          variant="contained"
-        >
-          Continue
-        </Button>
-      ) : (
-        <Button
-          endIcon={loader && <CircularProgress style={{color:"white"}} className="p-1 m-0" />}
-          onClick={() => {
-            functionCall();
-          }}
-          style={{ width: "90%" }}
-          variant="contained"
-        >
-          Send OTP
-        </Button>
-      )}
-
-    </div>
-  );
-
-
-
-
-
-
 
   return (
     <div>
@@ -246,9 +143,9 @@ const Login = () => {
             style={{ flexGrow: "1", zIndex: "9" }}
           >
             <h1>
-              {/*<a href="/" rel="dofollow">
+              <a href="/" rel="dofollow">
                 <img style={{ width: "11%" }} src={require("./acme.png")} />
-                </a>*/}
+              </a>
             </h1>
             <div className="box-root  flex-flex flex-justifyContent--center"></div>
             <div className="formbg-outer">
@@ -261,7 +158,6 @@ const Login = () => {
                     <div className="field padding-bottom--24">
                       <TextField
                         fullWidth
-                        value={email}
                         type="email"
                         label="Enter your Email"
                         id="filled-size-normal"
@@ -271,20 +167,9 @@ const Login = () => {
                         }}
                       />
                     </div>
-
                     <code style={{ backgroundColor: "transparent" }}>
-                      {otpMsg}
-                    </code>
-                    <code style={{ backgroundColor: "transparent" }}>
-                      {msg}
-                    </code>
-
-                    {otpViewer && otpViewerComponent}
-
-                    <code style={{ backgroundColor: "transparent" }}>
-                      {otpInputMsg}
-                    </code>
-
+                    {err}
+                  </code>
                     <div className="field padding-bottom--24">
                       {/*                  <div className="grid--50-50">
                     <label for="password">Password</label>
@@ -292,13 +177,13 @@ const Login = () => {
                       <a href="/">Forgot your password?</a>
                     </div>
     </div>*/}
-                      {/*                    <TextField
+{  /*                    <TextField
                         fullWidth
                         disabled={true}
                         label="Enter your Password"
                         id="filled-size-normal"
                         variant="filled"
-  />*/}
+/>*/}
                     </div>
                     <div className="field field-checkbox padding-bottom--24 flex-flex align-center">
                       <label for="checkbox">
@@ -307,7 +192,15 @@ const Login = () => {
                       </label>
                     </div>
                     <div className="field padding-bottom--24">
-                      {buttonComponent}
+                      <Button
+                        onClick={() => {
+                          functionCall();
+                        }}
+                        style={{ width: "90%" }}
+                        variant="contained"
+                      >
+                        Submit
+                      </Button>
                     </div>
                     <div className="field">
                       <a
@@ -337,4 +230,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login1;
