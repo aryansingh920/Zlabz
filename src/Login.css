@@ -2,6 +2,9 @@
 ::-webkit-scrollbar {
     width: 10px;
 }
+.iconButt::hover{
+    background-color: rgba(0, 90, 217, 0.792)
+}
 
 /* Track */
 ::-webkit-scrollbar-track {
