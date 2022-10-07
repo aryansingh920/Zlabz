@@ -5,8 +5,8 @@ import Button from "@mui/material/Button";
 import axios from "axios";
 import _ from "lodash"
 import * as EmailValidator from "email-validator";
-
-
+import IconButton from '@mui/material/IconButton';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const Login1 = () => {
   const [email, setEmail] = useState("");
@@ -150,11 +150,25 @@ const Login1 = () => {
             <div className="box-root  flex-flex flex-justifyContent--center"></div>
             <div className="formbg-outer">
               <div className="formbg uk-card uk-card-hover uk-card-body  p-0">
-                <div className="formbg-inner padding-horizontal--48">
-                  <span className="padding-bottom--15">
+                {<div className="formbg-inner padding-horizontal--48">
+
+
+
+                <IconButton 
+                onClick={() => {
+                  const query = new URLSearchParams(window.location.search);
+                  const redirect = query.get('redirect')
+                  window.open(redirect, '_blank');
+                }}
+                 style={{ backgroundColor:"rgba(0, 90, 217, 0.16)"}}  aria-label="add to shopping cart">
+  <NavigateNextIcon />
+</IconButton>
+
+
+                  {/*<span className="padding-bottom--15">
                     Sign in to your account
-                  </span>
-                  <form id="stripe-login">
+                </span>*/}
+                  {/*<form id="stripe-login">
                     <div className="field padding-bottom--24">
                       <TextField
                         fullWidth
@@ -169,21 +183,9 @@ const Login1 = () => {
                     </div>
                     <code style={{ backgroundColor: "transparent" }}>
                     {err}
-                  </code>
+                      </code>
                     <div className="field padding-bottom--24">
-                      {/*                  <div className="grid--50-50">
-                    <label for="password">Password</label>
-                    <div className="reset-pass">
-                      <a href="/">Forgot your password?</a>
-                    </div>
-    </div>*/}
-{  /*                    <TextField
-                        fullWidth
-                        disabled={true}
-                        label="Enter your Password"
-                        id="filled-size-normal"
-                        variant="filled"
-/>*/}
+
                     </div>
                     <div className="field field-checkbox padding-bottom--24 flex-flex align-center">
                       <label for="checkbox">
@@ -211,8 +213,8 @@ const Login1 = () => {
                         Use single sign-on (Google) instead
                       </a>
                     </div>
-                  </form>
-                </div>
+                      </form>*/}
+                </div>}
               </div>
               {/*<div className="footer-link padding-top--24">
             <span>Don't have an account? <a href="/">Sign up</a></span>
